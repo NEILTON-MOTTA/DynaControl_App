@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'screens/consulta_produtos_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -292,10 +293,9 @@ Future<void> fazerLogin() async {
     child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-  Icons.business,
-  size: 60,
-),
+              Image.asset('assets/images/logo.png',      height: 140,  ),
+              const SizedBox(height: 20),
+
 
 const SizedBox(height: 10),
 
@@ -434,6 +434,9 @@ class TelaMenuPrincipal extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
+          
+          Image.asset( 'assets/images/logo.png',  height: 120,),
+          const SizedBox(height: 10),
           const Text(
             'DynaControl',
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
@@ -537,12 +540,21 @@ class TelaProdutos extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: const [
+        children: [
           Card(
             child: ListTile(
-              leading: Icon(Icons.search),
-              title: Text('Consulta Produtos'),
-              subtitle: Text('Pesquisar produtos no estoque'),
+              leading: const Icon(Icons.search),
+              title: const Text('Consulta Produtos'),
+              subtitle: const Text('Pesquisar produtos no estoque'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ConsultaProdutosPage(),
+                  ),
+                );
+              },
             ),
           ),
         ],
