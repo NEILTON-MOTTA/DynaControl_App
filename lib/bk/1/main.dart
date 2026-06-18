@@ -544,37 +544,19 @@ class TelaProdutos extends StatelessWidget {
           Card(
             child: ListTile(
               leading: const Icon(Icons.search),
-              title: const Text('Por Código'),
-              subtitle: const Text('Pesquisar por código'),
+              title: const Text('Consulta Produtos'),
+              subtitle: const Text('Pesquisar produtos no estoque'),
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    
-                    builder: (_) => const ConsultaProdutosPage(1),
+                    builder: (_) => const ConsultaProdutosPage(),
                   ),
                 );
               },
             ),
           ),
-          Card(
-            child: ListTile(
-              leading: const Icon(Icons.search),
-              title: const Text('Por Código Fabricante'),
-              subtitle: const Text('Pesquisar por código Fabricante'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const ConsultaProdutosPage(2),
-                  ),
-                );
-              },
-            ),
-          ),
-   
         ],
       ),
     );

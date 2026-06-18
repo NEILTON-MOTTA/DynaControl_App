@@ -551,8 +551,7 @@ class TelaProdutos extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    
-                    builder: (_) => const ConsultaProdutosPage(1),
+                    builder: (_) => const ConsultaProdutosPage(),
                   ),
                 );
               },
@@ -568,7 +567,7 @@ class TelaProdutos extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const ConsultaProdutosPage(2),
+                    builder: (_) => const ConsultaProdutosPage(),
                   ),
                 );
               },

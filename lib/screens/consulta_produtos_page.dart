@@ -4,8 +4,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../models/produto.dart';
 import '../services/produto_service.dart';
 
+
 class ConsultaProdutosPage extends StatefulWidget {
-  const ConsultaProdutosPage({super.key});
+  final int tipoConsulta;
+
+  const ConsultaProdutosPage(
+    this.tipoConsulta, {
+    super.key,
+  });
+
 
   @override
   State<ConsultaProdutosPage> createState() => _ConsultaProdutosPageState();
@@ -17,46 +24,17 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
   Produto? produto;
   bool carregando = false;
   String mensagem = '';
+ 
 
   Future<void> pesquisarProduto() async {
-    final pesquisa = _pesquisaController.text.trim();
-
-    if (pesquisa.isEmpty) {
-      setState(() {
-        mensagem = 'Digite o código ou código do fabricante.';
-      });
-      return;
-    }
-
-    setState(() {
-      carregando = true;
-      mensagem = '';
-      produto = null;
-    });
-
-    final prefs = await SharedPreferences.getInstance();
-    final endpoint = prefs.getString('endpoint') ?? '';
-
-    if (endpoint.isEmpty) {
-      setState(() {
-        carregando = false;
-        mensagem = 'Endpoint da empresa não configurado.';
-      });
-      return;
-    }
-
-    final resultado = await ProdutoService.pesquisar(
-      endpoint: endpoint,
-      pesquisa: pesquisa,
-    );
-
-    setState(() {
-      carregando = false;
-      produto = resultado;
-      mensagem = resultado == null ? 'Produto não encontrado.' : '';
-    });
+    
+     if (widget.tipoConsulta == 1) {
+          pesquisarCodigoInterno();
+         }
+     else if (widget.tipoConsulta == 2) {
+         pesquisarCodigoFabricante(); 
+      }
   }
-
   void verAplicacao() {
   if (produto == null) return;
 
@@ -90,9 +68,17 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
 
   @override
   Widget build(BuildContext context) {
+     final tituloTela = widget.tipoConsulta == 1
+      ? 'Consulta por Código'
+      : 'Consulta por Código Fabricante';
+
+     final labelPesquisa = widget.tipoConsulta == 1
+      ? 'Código Interno'
+      : 'Código Fabricante';
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Consulta Produtos'),
+        title:  Text(tituloTela),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -100,8 +86,8 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
           children: [
             TextField(
               controller: _pesquisaController,
-              decoration: const InputDecoration(
-                labelText: 'Código ou Código Fabricante',
+              decoration:  InputDecoration(
+                labelText: labelPesquisa,
                 border: OutlineInputBorder(),
               ),
               textInputAction: TextInputAction.search,
@@ -183,4 +169,93 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
       ),
     );
   }
+
+Future<void> pesquisarCodigoInterno() async {
+   // consulta por código interno
+   final pesquisa = _pesquisaController.text.trim();
+   if (pesquisa.isEmpty) {
+      setState(() {
+        mensagem = 'Digite o código ';
+      });
+      return;
+    }
+
+    setState(() {
+      carregando = true;
+      mensagem = '';
+      produto = null;
+    });
+
+    final prefs = await SharedPreferences.getInstance();
+    final endpoint = prefs.getString('endpoint') ?? '';
+
+    if (endpoint.isEmpty) {
+      setState(() {
+        carregando = false;
+        mensagem = 'Endpoint da empresa não configurado.';
+      });
+      return;
+    }
+
+    final resultado = await ProdutoService.pesquisarCodigoInterno(
+      endpoint: endpoint,
+      pesquisa: pesquisa,
+    );
+
+    setState(() {
+      carregando = false;
+      produto = resultado;
+      mensagem = resultado == null ? 'Produto não encontrado.' : '';
+    });
+  }
+
+  
+
+
+Future<void> pesquisarCodigoFabricante() async {
+   // consulta por código fabricante
+   
+   final pesquisa = _pesquisaController.text.trim();
+   if (pesquisa.isEmpty) {
+      setState(() {
+        mensagem = 'Digite o código fabricante ';
+      });
+      return;
+    }
+
+    setState(() {
+      carregando = true;
+      mensagem = '';
+      produto = null;
+    });
+
+    final prefs = await SharedPreferences.getInstance();
+    final endpoint = prefs.getString('endpoint') ?? '';
+
+    if (endpoint.isEmpty) {
+       setState(() {
+        carregando = false;
+        mensagem = 'Endpoint da empresa não configurado.';
+      });
+      return;
+    }
+
+    final resultado = await ProdutoService.pesquisarCodigoFabricante(
+      endpoint: endpoint,
+      pesquisa: pesquisa,
+    );
+
+    setState(() {
+      carregando = false;
+      produto = resultado;
+      mensagem = resultado == null ? 'Produto não encontrado.' : '';
+    });
+  }
 }
+
+
+
+
+
+
+    
