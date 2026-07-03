@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dynacontrol_app/pages/foto_produto_page.dart';
 
 import '../models/produto.dart';
 import '../services/produto_service.dart';
@@ -158,6 +159,14 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
                               label: const Text('Ver Aplicação'),
                             ),
                           ),
+                          SizedBox(
+                            width: double.infinity,
+                            child: OutlinedButton.icon(
+                              onPressed: verFotos,
+                              icon: const Icon(Icons.photo),
+                              label: const Text('Ver Fotos'),
+                             ),
+                           ),
                         ],
                       ),
                     ),
@@ -251,9 +260,23 @@ Future<void> pesquisarCodigoFabricante() async {
       mensagem = resultado == null ? 'Produto não encontrado.' : '';
     });
   }
+
+void verFotos() {
+  if (produto == null) {
+    return;
+  }
+
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => FotoProdutoPage(
+        codigoProduto: produto!.codigo,
+      ),
+    ),
+  );
 }
-
-
+ 
+}
 
 
 
