@@ -18,6 +18,7 @@ class _FotoProdutoPageState extends State<FotoProdutoPage> {
   int fotoAtual = 1;
   int totalFotos = 0;
   String? endpoint;
+  final PageController pageController = PageController();
 
   @override
   void initState() {
@@ -103,12 +104,13 @@ Row(
   children: [
     ElevatedButton.icon(
       onPressed: fotoAtual > 1
-          ? () {
-              setState(() {
-                fotoAtual--;
-              });
-            }
-          : null,
+    ? () {
+        pageController.previousPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    : null,
       icon: const Icon(Icons.arrow_back),
       label: const Text('Anterior'),
     ),
@@ -117,12 +119,13 @@ Row(
 
     ElevatedButton.icon(
       onPressed: fotoAtual < totalFotos
-          ? () {
-              setState(() {
-                fotoAtual++;
-              });
-            }
-          : null,
+    ? () {
+        pageController.nextPage(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
+      }
+    : null,
       icon: const Icon(Icons.arrow_forward),
       label: const Text('Próxima'),
     ),
@@ -135,6 +138,7 @@ if (totalFotos > 0)
 SizedBox(
   height: 300,
   child: PageView.builder(
+    controller: pageController,
     itemCount: totalFotos,
     onPageChanged: (index) {
       setState(() {
@@ -147,7 +151,10 @@ SizedBox(
       final urlFotoPage =
           '$endpoint/produto_foto/${widget.codigoProduto}/$numeroFoto';
 
-      return Image.network(
+      return InteractiveViewer(
+           minScale: 1.0,
+           maxScale: 4.0,
+           child: Image.network(
         urlFotoPage,
         headers: const {
           'X-API-Key': 'sk_live_dc_9f4a7c2e1b8d6f3a5c2e7d9b4f1a8c6',
@@ -167,6 +174,7 @@ SizedBox(
             child: CircularProgressIndicator(),
           );
         },
+           ),
       );
     },
   ),
