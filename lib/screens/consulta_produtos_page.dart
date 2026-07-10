@@ -8,11 +8,16 @@ import '../services/produto_service.dart';
 
 class ConsultaProdutosPage extends StatefulWidget {
   final int tipoConsulta;
+  final Produto? produtoInicial;
 
   const ConsultaProdutosPage(
     this.tipoConsulta, {
     super.key,
+    this.produtoInicial,
   });
+
+
+
 
 
   @override
@@ -23,19 +28,25 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
   final TextEditingController _pesquisaController = TextEditingController();
 
   Produto? produto;
+  List<Produto> produtos = [];
   bool carregando = false;
   String mensagem = '';
+
+  @override
+void initState() {
+  super.initState();
+  produto = widget.produtoInicial;
+  debugPrint('ABRIU ConsultaProdutosPage - tipo 1');
+}
  
 
   Future<void> pesquisarProduto() async {
-    
-     if (widget.tipoConsulta == 1) {
-          pesquisarCodigoInterno();
-         }
-     else if (widget.tipoConsulta == 2) {
-         pesquisarCodigoFabricante(); 
-      }
+  if (widget.tipoConsulta == 1) {
+    await pesquisarCodigoInterno();
+  } else if (widget.tipoConsulta == 2) {
+    await pesquisarCodigoFabricante();
   }
+}
   void verAplicacao() {
   if (produto == null) return;
 
@@ -69,13 +80,21 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
 
   @override
   Widget build(BuildContext context) {
-     final tituloTela = widget.tipoConsulta == 1
-      ? 'Consulta por Código'
-      : 'Consulta por Código Fabricante';
 
-     final labelPesquisa = widget.tipoConsulta == 1
-      ? 'Código Interno'
-      : 'Código Fabricante';
+    
+    final tituloTela = widget.tipoConsulta == 1
+    ? 'Consulta por Código'
+    : widget.tipoConsulta == 2
+        ? 'Consulta por Código Fabricante'
+        : 'Consulta por Descrição';
+   debugPrint(
+  'ABRIU ConsultaProdutosPage - tipo ${widget.tipoConsulta}',
+);
+   final labelPesquisa = widget.tipoConsulta == 1
+    ? 'Código Interno'
+    : widget.tipoConsulta == 2
+        ? 'Código Fabricante'
+        : 'Descrição';
 
     return Scaffold(
       appBar: AppBar(
@@ -85,28 +104,30 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            TextField(
+            if (widget.tipoConsulta != 3) ...[
+             TextField(
               controller: _pesquisaController,
-              decoration:  InputDecoration(
-                labelText: labelPesquisa,
-                border: OutlineInputBorder(),
-              ),
+              decoration: InputDecoration(
+              labelText: labelPesquisa,
+              border: const OutlineInputBorder(),
+           ),
               textInputAction: TextInputAction.search,
               onSubmitted: (_) => pesquisarProduto(),
-            ),
+           ),
 
-            const SizedBox(height: 12),
+               const SizedBox(height: 12),
 
-            SizedBox(
+              SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
-                onPressed: carregando ? null : pesquisarProduto,
-                icon: const Icon(Icons.search),
-                label: const Text('Pesquisar'),
-              ),
-            ),
+              onPressed: carregando ? null : pesquisarProduto,
+              icon: const Icon(Icons.search),
+              label: const Text('Pesquisar'),
+    ),
+  ),
 
-            const SizedBox(height: 16),
+               const SizedBox(height: 16),
+],
 
             if (carregando)
               const CircularProgressIndicator(),
@@ -252,15 +273,70 @@ Future<void> pesquisarCodigoFabricante() async {
     final resultado = await ProdutoService.pesquisarCodigoFabricante(
       endpoint: endpoint,
       pesquisa: pesquisa,
+      
     );
-
+   
     setState(() {
       carregando = false;
       produto = resultado;
+      
       mensagem = resultado == null ? 'Produto não encontrado.' : '';
     });
   }
 
+  ///////////////////////////////////////////////////
+  
+Future<void> pesquisarDescricao() async {
+  final pesquisa = _pesquisaController.text.trim();
+
+  if (pesquisa.isEmpty) {
+    setState(() {
+      mensagem = 'Digite a descrição do produto.';
+    });
+    return;
+  }
+  
+  setState(() {
+    carregando = true;
+    mensagem = '';
+    produtos.clear();
+  });
+
+  final prefs = await SharedPreferences.getInstance();
+  final endpoint = prefs.getString('endpoint') ?? '';
+
+  if (endpoint.isEmpty) {
+    setState(() {
+      carregando = false;
+      mensagem = 'Endpoint da empresa não configurado.';
+    });
+    return;
+  }
+///////////////////////////////////
+///
+///
+  // Aqui vamos chamar o ProdutoService no próximo passo.
+final resultado = await ProdutoService.pesquisarDescricao(
+  endpoint: endpoint,
+  pesquisa: pesquisa,
+);
+
+debugPrint('Total encontrado: ${resultado.count}');
+debugPrint('Itens retornados: ${resultado.items.length}');
+//
+
+setState(() {
+  carregando = false;
+  produtos = resultado.items;
+  debugPrint('Produtos na tela: ${produtos.length}');
+
+  if (produtos.isEmpty) {
+    mensagem = 'Nenhum produto encontrado.';
+
+  }
+});
+  //
+}
 void verFotos() {
   if (produto == null) {
     return;

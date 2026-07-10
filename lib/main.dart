@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/consulta_produtos_page.dart';
-
+import 'package:dynacontrol_app/Pages/selecionar_produto_page.dart';
+import 'package:dynacontrol_app/models/produto.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -546,6 +547,7 @@ class TelaProdutos extends StatelessWidget {
               leading: const Icon(Icons.search),
               title: const Text('Por Código'),
               subtitle: const Text('Pesquisar por código'),
+              
               trailing: const Icon(Icons.arrow_forward_ios),
               onTap: () {
                 Navigator.push(
@@ -554,6 +556,7 @@ class TelaProdutos extends StatelessWidget {
                     
                     builder: (_) => const ConsultaProdutosPage(1),
                   ),
+                  
                 );
               },
             ),
@@ -572,6 +575,40 @@ class TelaProdutos extends StatelessWidget {
                   ),
                 );
               },
+            ),
+          ),
+          Card(
+            child: ListTile(
+              leading: const Icon(Icons.search),
+              title: const Text('Por Descrição'),
+              subtitle: const Text('Pesquisar por descrição'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              //--------------------------
+              onTap: () async {
+                final Produto? produtoSelecionado =
+                await Navigator.push<Produto>(
+                context,
+                MaterialPageRoute(
+                builder: (_) => const SelecionarProdutoPage(),
+              ),
+              );
+
+               if (produtoSelecionado == null || !context.mounted) {
+                return;
+               }
+
+               Navigator.push(
+               context,
+               MaterialPageRoute(
+               builder: (_) => ConsultaProdutosPage(
+               3,
+               produtoInicial: produtoSelecionado,
+      ),
+    ),
+  );
+},
+
+              //-------------
             ),
           ),
    

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/produto.dart';
 import 'package:flutter/foundation.dart';
+import '../models/resultado_produtos.dart';
 
 class ProdutoService {
   static const String apiKey =
@@ -105,4 +106,50 @@ class ProdutoService {
       return null;
     }
   }
+
+  //
+
+
+static Future<ResultadoProdutos> pesquisarDescricao({
+  required String endpoint,
+  required String pesquisa,
+  int limit = 50,
+  int offset = 0,
+}) async {
+  try {
+    final url = Uri.parse(
+      '$endpoint/produto_descricao/$pesquisa'
+      '?limit=$limit&offset=$offset',
+    );
+
+    final resposta = await http.get(
+      url,
+      headers: {
+        'X-API-Key': apiKey,
+      },
+    );
+
+    if (resposta.statusCode != 200) {
+      return ResultadoProdutos(
+        count: 0,
+        offset: offset,
+        limit: limit,
+        items: [],
+      );
+    }
+
+    final dados = jsonDecode(resposta.body);
+
+    return ResultadoProdutos.fromJson(dados);
+  } catch (e) {
+    debugPrint('Erro ao pesquisar descrição: $e');
+
+    return ResultadoProdutos(
+      count: 0,
+      offset: offset,
+      limit: limit,
+      items: [],
+    );
+  }
+}
 }

@@ -1,6 +1,7 @@
 class Produto {
   final String codigo;
   final String descricao;
+  final String codfabricante;
   final String aplicacao;
   final String fabricante;
   final String segmento;
@@ -14,6 +15,7 @@ class Produto {
   Produto({
     required this.codigo,
     required this.descricao,
+     required this.codfabricante,
     required this.aplicacao,
     required this.fabricante,
     required this.segmento,
@@ -31,6 +33,7 @@ class Produto {
       descricao: json['descricao']?.toString() ?? '',
       aplicacao: json['aplicacao']?.toString() ?? '',
       fabricante: json['fabricante']?.toString() ?? '',
+      codfabricante: json['codfabricante']?.toString() ?? '',
       segmento: json['segmento']?.toString() ?? '',
       qtde: double.tryParse(json['qtde'].toString()) ?? 0,
       preco1: double.tryParse(json['preco1'].toString()) ?? 0,
