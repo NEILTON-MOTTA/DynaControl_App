@@ -6,16 +6,20 @@ import '../models/produto.dart';
 import '../services/produto_service.dart';
 
 
+import 'package:dynacontrol_app/pages/inventario_produto_page.dart';
+
+
 class ConsultaProdutosPage extends StatefulWidget {
   final int tipoConsulta;
   final Produto? produtoInicial;
+  final bool modoInventario;
 
   const ConsultaProdutosPage(
     this.tipoConsulta, {
     super.key,
     this.produtoInicial,
+    this.modoInventario = false,
   });
-
 
 
 
@@ -188,6 +192,26 @@ void initState() {
                               label: const Text('Ver Fotos'),
                              ),
                            ),
+                           //------------------------------------------------------------------------------
+                           if (widget.modoInventario)
+                              SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton.icon(
+                              onPressed: () {
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                              builder: (_) => InventarioProdutoPage(
+                              produto: produto!,
+                               ),
+                               ),
+                               );
+                               },
+                               icon: const Icon(Icons.inventory),
+                               label: const Text('Fazer Inventário'),
+                               ),
+                             ),
+                           //-----------------------------------
                         ],
                       ),
                     ),

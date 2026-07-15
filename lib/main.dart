@@ -7,6 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'screens/consulta_produtos_page.dart';
 import 'package:dynacontrol_app/Pages/selecionar_produto_page.dart';
 import 'package:dynacontrol_app/models/produto.dart';
+import 'package:flutter/material.dart';
+
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -529,10 +532,13 @@ Text(
     );
   }
 }
-
 class TelaProdutos extends StatelessWidget {
-  const TelaProdutos({super.key});
+  final bool modoInventario;
 
+  const TelaProdutos({
+    super.key,
+    this.modoInventario = false,
+  });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -554,7 +560,10 @@ class TelaProdutos extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     
-                    builder: (_) => const ConsultaProdutosPage(1),
+                    builder: (_) => ConsultaProdutosPage(
+                  1,
+                    modoInventario: modoInventario,
+),
                   ),
                   
                 );
@@ -571,7 +580,10 @@ class TelaProdutos extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const ConsultaProdutosPage(2),
+                      builder: (_) => ConsultaProdutosPage(
+                  2,
+                    modoInventario: modoInventario,
+),
                   ),
                 );
               },
@@ -585,25 +597,26 @@ class TelaProdutos extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios),
               //--------------------------
               onTap: () async {
-                final Produto? produtoSelecionado =
-                await Navigator.push<Produto>(
-                context,
-                MaterialPageRoute(
-                builder: (_) => const SelecionarProdutoPage(),
-              ),
-              );
+               final Produto? produtoSelecionado =
+               await Navigator.push<Produto>(
+              context,
+              MaterialPageRoute(
+              builder: (_) => const SelecionarProdutoPage(),
+           ),
+           );
 
-               if (produtoSelecionado == null || !context.mounted) {
-                return;
-               }
+           if (produtoSelecionado == null || !context.mounted) {
+           return;
+           }
 
-               Navigator.push(
-               context,
-               MaterialPageRoute(
-               builder: (_) => ConsultaProdutosPage(
-               3,
-               produtoInicial: produtoSelecionado,
-      ),
+           Navigator.push(
+           context,
+          MaterialPageRoute(
+          builder: (_) => ConsultaProdutosPage(
+         3,
+         produtoInicial: produtoSelecionado,
+         modoInventario: modoInventario,
+       ),
     ),
   );
 },
@@ -617,7 +630,6 @@ class TelaProdutos extends StatelessWidget {
     );
   }
 }
-
 class TelaRestrita extends StatelessWidget {
   const TelaRestrita({super.key});
 
@@ -629,15 +641,26 @@ class TelaRestrita extends StatelessWidget {
       ),
       body: ListView(
         padding: const EdgeInsets.all(16),
-        children: const [
+        children: [
           Card(
             child: ListTile(
-              leading: Icon(Icons.inventory),
-              title: Text('Produtos'),
-              subtitle: Text('Inventário de produtos'),
+              leading: const Icon(Icons.inventory),
+              title: const Text('Produtos'),
+              subtitle: const Text('Inventário de produtos'),
+              trailing: const Icon(Icons.arrow_forward_ios),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const TelaProdutos(
+                    modoInventario: true,
+                    ),
+                  ),
+                );
+              },
             ),
           ),
-          Card(
+          const Card(
             child: ListTile(
               leading: Icon(Icons.attach_money),
               title: Text('Faturamento'),

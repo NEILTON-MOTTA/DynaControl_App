@@ -4,6 +4,7 @@ import '../models/produto.dart';
 import 'package:flutter/foundation.dart';
 import '../models/resultado_produtos.dart';
 
+
 class ProdutoService {
   static const String apiKey =
       'sk_live_dc_9f4a7c2e1b8d6f3a5c2e7d9b4f1a8c6';
@@ -151,5 +152,49 @@ static Future<ResultadoProdutos> pesquisarDescricao({
       items: [],
     );
   }
+}
+
+static Future<Map<String, dynamic>> inventarioProduto(
+  String endpoint,
+  String codigo,
+  double quantidade,
+) async {
+  final endpointLimpo = endpoint.endsWith('/')
+      ? endpoint.substring(0, endpoint.length - 1)
+      : endpoint;
+
+  final quantidadeUrl = quantidade.toString();
+
+  final url = Uri.parse(
+    '$endpointLimpo/inventario_produto/$codigo/$quantidadeUrl',
+  );
+
+  final resposta = await http.put(
+    url,
+    headers: {
+        'X-API-Key': apiKey,
+       'Content-Type': 'application/json',
+      },
+  );
+
+  if (resposta.statusCode == 200) {
+    return jsonDecode(resposta.body) as Map<String, dynamic>;
+  }
+
+  String mensagemErro = 'Erro ao realizar o inventário.';
+
+  try {
+    final dadosErro =
+        jsonDecode(resposta.body) as Map<String, dynamic>;
+
+    mensagemErro =
+        dadosErro['detail']?.toString() ??
+        dadosErro['mensagem']?.toString() ??
+        mensagemErro;
+  } catch (_) {
+    // Mantém a mensagem padrão quando a API não retorna JSON.
+  }
+
+  throw Exception(mensagemErro);
 }
 }
