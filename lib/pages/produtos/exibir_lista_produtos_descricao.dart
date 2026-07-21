@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/produto.dart';
-import '../services/produto_service.dart';
+import 'package:dynacontrol_app/models/produto.dart';
+import 'package:dynacontrol_app/services/produto_service.dart';
 
-class SelecionarProdutoPage extends StatefulWidget {
-  const SelecionarProdutoPage({super.key});
+class ExibirlistaprodutosDescricao extends StatefulWidget {
+  const ExibirlistaprodutosDescricao({super.key});
 
   @override
-  State<SelecionarProdutoPage> createState() => _SelecionarProdutoPageState();
+  State<ExibirlistaprodutosDescricao> createState() => _ExibirlistaprodutosDescricaoState();
 }
 
-class _SelecionarProdutoPageState extends State<SelecionarProdutoPage> {
+class _ExibirlistaprodutosDescricaoState extends State<ExibirlistaprodutosDescricao> {
   final TextEditingController _pesquisaController = TextEditingController();
 
   List<Produto> produtos = [];

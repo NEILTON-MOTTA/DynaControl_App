@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'pages/config_empresa_page.dart';
-import 'pages/login_page.dart';
+
+import 'package:dynacontrol_app/pages/login/config_empresa_page.dart';
+import 'package:dynacontrol_app/pages/login/login_page.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

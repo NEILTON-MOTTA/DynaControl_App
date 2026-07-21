@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/produto.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:dynacontrol_app/models/produto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/produto_service.dart';
+import 'package:dynacontrol_app/services/produto_service.dart';
 
 
 class InventarioProdutoPage extends StatefulWidget {

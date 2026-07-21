@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:dynacontrol_app/pages/foto_produto_page.dart';
-
-import '../models/produto.dart';
-import '../services/produto_service.dart';
-
-
-import 'package:dynacontrol_app/pages/inventario_produto_page.dart';
+import 'package:dynacontrol_app/pages/produtos/foto_produto_page.dart';
+import 'package:dynacontrol_app/models/produto.dart';
+import 'package:dynacontrol_app/pages/produtos/inventario_produto_page.dart';
+import 'package:dynacontrol_app/services/produto_service.dart';
 
 
-class ConsultaProdutosPage extends StatefulWidget {
+class ConsultasProdutoPage extends StatefulWidget {
   final int tipoConsulta;
   final Produto? produtoInicial;
   final bool modoInventario;
 
-  const ConsultaProdutosPage(
+  const ConsultasProdutoPage(
     this.tipoConsulta, {
     super.key,
     this.produtoInicial,
@@ -25,10 +22,10 @@ class ConsultaProdutosPage extends StatefulWidget {
 
 
   @override
-  State<ConsultaProdutosPage> createState() => _ConsultaProdutosPageState();
+  State<ConsultasProdutoPage> createState() => _ConsultasProdutoPageState();
 }
 
-class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
+class _ConsultasProdutoPageState extends State<ConsultasProdutoPage> {
   final TextEditingController _pesquisaController = TextEditingController();
 
   Produto? produto;
@@ -40,7 +37,7 @@ class _ConsultaProdutosPageState extends State<ConsultaProdutosPage> {
 void initState() {
   super.initState();
   produto = widget.produtoInicial;
-  debugPrint('ABRIU ConsultaProdutosPage - tipo 1');
+  debugPrint('ABRIU ConsultasProdutoPage - tipo 1');
 }
  
 
