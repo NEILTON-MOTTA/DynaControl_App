@@ -153,6 +153,11 @@ class _CmvPageState extends State<CmvPage> {
       children: [
         montarPainel(
           icone: Icons.factory_outlined,
+          titulo: 'Vendas do mês',
+          valor: formatarMoeda(dados.vendaacumulada),
+        ),
+        montarPainel(
+          icone: Icons.factory_outlined,
           titulo: 'Custo da Mercadoria Vendida',
           valor: formatarMoeda(dados.cmv),
         ),

@@ -4,6 +4,8 @@ class Adm {
   final double volume;
   final int qtdeVendas;
   final double ticketMedio;
+  final double markup;
+  final double margem;
   final bool encontrado;
 
   const Adm({
@@ -12,6 +14,8 @@ class Adm {
     required this.volume,
     required this.qtdeVendas,
     required this.ticketMedio,
+    required this.markup,
+    required this.margem,
     required this.encontrado,
   });
 
@@ -22,6 +26,8 @@ class Adm {
       volume: (json['volume'] as num?)?.toDouble() ?? 0,
       qtdeVendas: (json['qtde_vendas'] as num?)?.toInt() ?? 0,
       ticketMedio: (json['ticketmedio'] as num?)?.toDouble() ?? 0,
+      markup: (json['markup'] as num?)?.toDouble() ?? 0,
+      margem: (json['margem'] as num?)?.toDouble() ?? 0,
       encontrado: json['encontrado'] == true,
     );
   }

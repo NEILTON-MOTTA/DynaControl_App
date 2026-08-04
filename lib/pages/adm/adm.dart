@@ -173,7 +173,7 @@ class _AdmPageState extends State<AdmPage> {
 
             linhaInformacao(
               icone: Icons.inventory_2_outlined,
-              titulo: 'Volume',
+              titulo: 'Volume em qtde',
               valor: adm.volume.toStringAsFixed(0),
             ),
 
@@ -187,6 +187,16 @@ class _AdmPageState extends State<AdmPage> {
               icone: Icons.show_chart,
               titulo: 'Ticket médio',
               valor: formatarMoeda(adm.ticketMedio),
+            ),
+            linhaInformacao(
+              icone: Icons.trending_up,
+              titulo: 'Markup',
+              valor: '${adm.markup.toStringAsFixed(2)}%',
+            ),
+            linhaInformacao(
+              icone: Icons.pie_chart,
+              titulo: 'Margem',
+              valor: '${adm.margem.toStringAsFixed(2)}%',
             ),
           ],
         ),
