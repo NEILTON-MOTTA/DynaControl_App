@@ -93,6 +93,60 @@ class AreaRestritaPage extends StatelessWidget {
               },
              ),
             ),
+            Card(
+             child: ListTile(
+               leading: const Icon(Icons.attach_money),
+               title: const Text('Fluxo de Caixa - (Entradas)'),
+               subtitle: const Text(
+               'Resumo de recebimentos',
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => const CmvFornecedorPage(),
+                ),
+               );
+              },
+             ),
+            ),
+            Card(
+             child: ListTile(
+               leading: const Icon(Icons.attach_money),
+               title: const Text('Fluxo de Caixa - (saidas)'),
+               subtitle: const Text(
+               'lista de saidas do caixa',
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => const CmvFornecedorPage(),
+                ),
+               );
+              },
+             ),
+            ),
+            Card(
+             child: ListTile(
+               leading: const Icon(Icons.attach_money),
+               title: const Text('Contas a Pagar'),
+               subtitle: const Text(
+               'Boletos a pagar na data de hoje',
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                builder: (context) => const CmvFornecedorPage(),
+                ),
+               );
+              },
+             ),
+            ),
 
         ],
       ),

@@ -180,9 +180,8 @@ class _CmvFornecedorPageState extends State<CmvFornecedorPage> {
   @override  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('CmvFornecedorFornecedor x Compras'),
-      ),
-      body: RefreshIndicator(
+        title: const Text('CMV x Pagamento Fornecedor'),
+      ),      body: RefreshIndicator(
         onRefresh: buscarDados,
         child: carregando
             ? const Center(
