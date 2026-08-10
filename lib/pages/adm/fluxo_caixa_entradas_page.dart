@@ -18,6 +18,12 @@ class _FluxoCaixaEntradasPageState extends State<FluxoCaixaEntradasPage> {
 
   bool carregando = true;
   String mensagem = '';
+  double get totalEntradas {
+  return entradas.fold(
+    0.0,
+    (total, entrada) => total + entrada.valor,
+  );
+}
 
   @override
   void initState() {
@@ -68,32 +74,60 @@ class _FluxoCaixaEntradasPageState extends State<FluxoCaixaEntradasPage> {
                 ? Center(
                     child: Text(mensagem),
                   )
-                : ListView.builder(
-                    itemCount: entradas.length,
-                    itemBuilder: (context, index) {
-                      final entrada = entradas[index];
+                : Column(
+       children: [
+       Card(
+          child: ListTile(
+          leading: const Icon(Icons.account_balance_wallet),
+          title: const Text(
+            'Total das Entradas',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          subtitle: Text(
+            formatarMoeda(totalEntradas),
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
 
-                      return Card(
-                        child: ListTile(
-                          leading: const Icon(Icons.attach_money),
-                          title: Text(
-                          entrada.forma,
-                          style: const TextStyle( 
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                           ),
-),
-                          subtitle: Text(
-                          formatarMoeda(entrada.valor),
-                          style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                           ),
-),
-                        ),
-                      );
-                    },
+      const SizedBox(height: 12),
+
+      Expanded(
+        child: ListView.builder(
+          itemCount: entradas.length,
+          itemBuilder: (context, index) {
+            final entrada = entradas[index];
+
+            return Card(
+              child: ListTile(
+                leading: const Icon(Icons.attach_money),
+                title: Text(
+                  entrada.forma,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
                   ),
+                ),
+                subtitle: Text(
+                  formatarMoeda(entrada.valor),
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    ],
+  ),
       ),
     );
   }
