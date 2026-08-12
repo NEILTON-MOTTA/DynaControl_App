@@ -5,6 +5,7 @@ import 'package:dynacontrol_app/pages/adm/cmv_page.dart';
 import 'package:dynacontrol_app/pages/adm/cmv_fornecedor_page.dart';
 import 'package:dynacontrol_app/pages/adm/fluxo_caixa_entradas_page.dart';
 import 'package:dynacontrol_app/pages/adm/fluxo_caixa_saidas_page.dart';
+import 'package:dynacontrol_app/pages/adm/contas_pagar_page.dart';
 
 
 class AreaRestritaPage extends StatelessWidget {
@@ -143,7 +144,7 @@ class AreaRestritaPage extends StatelessWidget {
                 Navigator.push(
                 context,
                 MaterialPageRoute(
-                builder: (context) => const CmvFornecedorPage(),
+                builder: (context) => const ContasPagarPage(),
                 ),
                );
               },
