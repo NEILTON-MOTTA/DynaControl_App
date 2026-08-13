@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:dynacontrol_app/pages/produtos/menu_produtos_page.dart';
 import 'package:dynacontrol_app/pages/restrita/area_restrita_page.dart';
 import 'package:dynacontrol_app/pages/login/login_page.dart';
+import 'package:dynacontrol_app/pages/clientes/clientes_menu_page.dart';
 
 
 
@@ -75,13 +76,22 @@ class PrincipalPage extends StatelessWidget {
 
           Card(
             child: ListTile(
-              leading: const Icon(Icons.people),
-              title: const Text('Clientes'),
-              subtitle: const Text('Cadastro e consulta de clientes'),
-              trailing: const Icon(Icons.arrow_forward_ios),
-              onTap: () {},
-            ),
+            leading: const Icon(Icons.people),
+            title: const Text('Clientes'),
+            subtitle: const Text(
+           'Consulta e cadastro de clientes',
           ),
+           trailing: const Icon(Icons.arrow_forward_ios),
+           onTap: () {
+           Navigator.push(
+           context,
+           MaterialPageRoute(
+           builder: (context) => const ClientesMenuPage(),
+        ),
+      );
+    },
+  ),
+),
 
           Card(
             child: ListTile(
