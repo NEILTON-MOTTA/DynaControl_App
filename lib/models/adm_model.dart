@@ -6,6 +6,7 @@ class Adm {
   final double ticketMedio;
   final double markup;
   final double margem;
+  final double cmv;
   final bool encontrado;
 
   const Adm({
@@ -16,6 +17,7 @@ class Adm {
     required this.ticketMedio,
     required this.markup,
     required this.margem,
+    required this.cmv,
     required this.encontrado,
   });
 
@@ -28,6 +30,7 @@ class Adm {
       ticketMedio: (json['ticketmedio'] as num?)?.toDouble() ?? 0,
       markup: (json['markup'] as num?)?.toDouble() ?? 0,
       margem: (json['margem'] as num?)?.toDouble() ?? 0,
+      cmv: (json['cmv'] as num?)?.toDouble() ?? 0,
       encontrado: json['encontrado'] == true,
     );
   }

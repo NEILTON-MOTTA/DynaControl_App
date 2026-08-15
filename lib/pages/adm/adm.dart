@@ -147,6 +147,11 @@ class _AdmPageState extends State<AdmPage> {
               titulo: 'Vendas',
               valor: formatarMoeda(adm.vendas),
             ),
+            linhaInformacao(
+              icone: Icons.pie_chart,
+              titulo: 'CMV',
+              valor: formatarMoeda(adm.cmv)
+             ),
 
             linhaInformacao(
               icone: Icons.inventory_2_outlined,
@@ -175,6 +180,7 @@ class _AdmPageState extends State<AdmPage> {
               titulo: 'Margem',
               valor: '${adm.margem.toStringAsFixed(2)}%',
             ),
+            
           ],
         ),
       ),

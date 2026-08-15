@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dynacontrol_app/pages/clientes/consulta_cliente_cnpj_page.dart';
 import 'package:dynacontrol_app/pages/clientes/consulta_cliente_nome_page.dart';
+import 'package:dynacontrol_app/pages/clientes/cadastro_cliente_page.dart';
 class ClientesMenuPage extends StatelessWidget {
   const ClientesMenuPage({super.key});
 
@@ -80,8 +81,13 @@ class ClientesMenuPage extends StatelessWidget {
                 ),
                 trailing: const Icon(Icons.arrow_forward_ios),
                 onTap: () {
-                  // Vamos programar depois
-                },
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+                 builder: (context) => const CadastroClientePage(),
+                ),
+  );
+},
               ),
             ),
           ],

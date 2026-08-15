@@ -26,7 +26,7 @@ class Cliente {
   final String contato;
   final String email;
   final String obs;
-  final String? desativarSistema;
+  final int desativarSistema;
   final String retorno;
 
   Cliente({

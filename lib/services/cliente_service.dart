@@ -21,6 +21,10 @@ class ClienteService {
       },
     );
 
+  print('URL CNPJ: $url');
+  print('STATUS CNPJ: ${resposta.statusCode}');
+  print('RESPOSTA CNPJ: ${resposta.body}');
+
     if (resposta.statusCode == 200) {
       final dados = jsonDecode(resposta.body);
 
@@ -57,5 +61,29 @@ class ClienteService {
   }
 
   return [];
+}
+static Future<String> cadastrarCliente(
+  String endpoint,
+  Map<String, dynamic> cliente,
+) async {
+  final url = Uri.parse('$endpoint/cliente');
+
+  final resposta = await http.post(
+    url,
+    headers: {
+      'X-API-Key': apiKey,
+      'Content-Type': 'application/json',
+    },
+    body: jsonEncode(cliente),
+  );
+
+  final dados = jsonDecode(resposta.body);
+
+  if (resposta.statusCode == 200 ||
+      resposta.statusCode == 201) {
+    return 'OK';
+  }
+
+  return dados['detail'] ?? 'Erro ao cadastrar cliente.';
 }
 }
