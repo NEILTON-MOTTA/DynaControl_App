@@ -17,14 +17,16 @@ class _ConfigEmpresaPageState extends State<ConfigEmpresaPage> {
   String mensagem = '';
 
   Future<void> localizarEmpresa() async {
-    final cnpj = cnpjController.text.replaceAll(RegExp(r'[^0-9]'), '');
+    //final cnpj = cnpjController.text.replaceAll(RegExp(r'[^0-9]'), '');
+    //final Buscaid = cnpjController.text.trim().toUpperCase();
+    final cnpj = cnpjController.text.trim().toUpperCase();
 
-    if (cnpj.length != 14) {
-      setState(() {
-        mensagem = 'CNPJ inválido. Digite 14 números.';
-      });
-      return;
-    }
+   // if (cnpj.length != 14) {
+   //   setState(() {
+   //     mensagem = 'CNPJ inválido. Digite 14 números.';
+   //   });
+    //  return;
+    //}
 
     setState(() {
       carregando = true;
@@ -32,7 +34,7 @@ class _ConfigEmpresaPageState extends State<ConfigEmpresaPage> {
     });
 
     try {
-      final url = Uri.parse('https://vps1.dynacomp.api.br/empresa_cnpj/$cnpj');
+      final url = Uri.parse('https://vps1.dynacomp.api.br/empresa_id/$cnpj');
       final resposta = await http.get(
   url,
   headers: {
@@ -92,7 +94,7 @@ void dispose() {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              'Informe o CNPJ da empresa',
+              'Informe o ID da empresa',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
 
@@ -100,9 +102,10 @@ void dispose() {
 
             TextField(
               controller: cnpjController,
-              keyboardType: TextInputType.number,
+              //keyboardType: TextInputType.number,
+              keyboardType: TextInputType.text,
               decoration: const InputDecoration(
-                labelText: 'CNPJ',
+                labelText: 'ID da Empresa',
                 border: OutlineInputBorder(),
               ),
             ),
