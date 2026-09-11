@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dynacontrol_app/pages/clientes/consulta_cliente_cnpj_page.dart';
+import 'package:dynacontrol_app/pages/clientes/consulta_cliente_codigo_page.dart';
 import 'package:dynacontrol_app/pages/clientes/consulta_cliente_nome_page.dart';
 import 'package:dynacontrol_app/pages/clientes/cadastro_cliente_page.dart';
 class ClientesMenuPage extends StatelessWidget {
@@ -16,6 +17,30 @@ class ClientesMenuPage extends StatelessWidget {
         child: Column(
           children: [
             Card(
+              child: ListTile(
+                leading: const Icon(Icons.badge_outlined),
+                title: const Text(
+                  'Consultar por Código',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                subtitle: const Text(
+                  'Localizar cliente pelo código',
+                ),
+                trailing: const Icon(Icons.arrow_forward_ios),
+                onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(
+               builder: (context) => const ConsultaClienteCodigoPage(),
+    ),
+  );
+},
+              ),
+            ),
+                     Card(
               child: ListTile(
                 leading: const Icon(Icons.badge_outlined),
                 title: const Text(

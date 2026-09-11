@@ -66,7 +66,11 @@ Future<void> fazerLogin() async {
       return;
     }
 
-    final url = Uri.parse('$endpoint/valida_auth/$usuario/$senha');
+    // final url = Uri.parse('$endpoint/valida_auth/$usuario/$senha');
+    final url = Uri.parse(
+    '$endpoint/valida_auth/${Uri.encodeComponent(usuario)}/${Uri.encodeComponent(senha)}',
+);
+
 
     final resposta = await http.get(
       url,

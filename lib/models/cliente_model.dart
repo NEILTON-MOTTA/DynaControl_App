@@ -90,7 +90,7 @@ class Cliente {
     contato: json['__contato'] ?? '',
     email: json['__email'] ?? '',
     obs: json['__obs'] ?? '',
-    desativarSistema: json['__desativar_sistema'],
+    desativarSistema: json['__desativar_sistema'] ?? 0,
     retorno: json['__retorno'] ?? '',
   );
 }
